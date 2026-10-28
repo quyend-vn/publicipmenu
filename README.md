@@ -10,7 +10,14 @@ View your public IP address in the Mac menu bar. Click to copy. A small native S
 
 ## Install
 
-Requires **macOS 13+**. Open the DMG, drag **Public IP.app** to **Applications**, then open it.
+Requires **macOS 13+**. Install with Homebrew:
+
+```sh
+brew tap quyend-vn/publicipmenu https://github.com/quyend-vn/publicipmenu.git
+brew install --cask quyend-vn/publicipmenu/publicipmenu
+```
+
+Or open the DMG and drag **Public IP.app** to **Applications**.
 
 Builds are ad-hoc signed and **not notarised**; macOS may block the first launch. See [Apple's guidance](https://support.apple.com/en-gb/102445). Universal includes Apple Silicon and Intel; Intel runtime testing is pending.
 
