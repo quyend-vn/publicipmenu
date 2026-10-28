@@ -1,0 +1,8 @@
+.DS_Store
+build/
+*.app/
+*.dSYM/
+
+# Local validation files are not published.
+Tests/
+test.sh
