@@ -1,71 +1,37 @@
-# Public IP
+# Public IP Menu Bar for macOS
 
-**Your public IP, right in the macOS menu bar. Click to copy.**
+View your public IP address in the Mac menu bar. Click to copy. A small native Swift app with no account, ads or analytics.
 
-Public IP is a small native Mac app that does one thing simply: keeps your public IP address visible and ready to paste. No browser tab to open, no dashboard to navigate, and no account to create.
+**[Download for Apple Silicon](https://github.com/quyend-vn/publicipmenu/releases/download/v1.1.1/Public-IP-1.1.1-AppleSilicon.dmg)** · **[Universal / Intel preview](https://github.com/quyend-vn/publicipmenu/releases/download/v1.1.1/Public-IP-1.1.1-Universal.dmg)**
 
-## Everyday use
+<img src="assets/screenshot.png" alt="Public IP macOS menu showing Copy IP, Refresh IP and the Launch at Login toggle" width="260">
 
-1. Open **Public IP** from Applications.
-2. See your public IP beside a small globe in the menu bar.
-3. Click it to copy the address. Paste wherever you need it.
+*Native menu with an example IP address.*
 
-That's it. The app lives in the menu bar, with no Dock icon or main window.
+## Install
 
-Right-click for a few useful options:
+Requires **macOS 13+**. Open the DMG, drag **Public IP.app** to **Applications**, then open it.
 
-| Option | What it does |
-| --- | --- |
-| **Copy IP** | Copies the displayed address. |
-| **Refresh IP** | Checks your public IP immediately. |
-| **Launch at Login** | Click to toggle automatic launch when you sign in. A checkmark means enabled. |
-| **Quit Public IP** | Closes the app. |
+Builds are ad-hoc signed and **not notarised**; macOS may block the first launch. See [Apple's guidance](https://support.apple.com/en-gb/102445). Universal includes Apple Silicon and Intel; Intel runtime testing is pending.
 
-**Launch at Login is enabled by default on the first launch.** Click **Launch at Login** to tick or untick it; your choice is kept between launches. There is no submenu. A dash means macOS approval is pending. If macOS asks for approval, use **Open Login Items Settings…** in the menu to approve it. Changes made in System Settings are respected.
+## Use
 
-## Small by design
+- **Click** the menu bar IP to copy it.
+- **Right-click** to refresh, toggle Launch at Login or quit.
+- Refreshes automatically about every minute. Launch at Login is on by default.
+- Runs in the menu bar, with no Dock icon or main window.
 
-- Native Swift and AppKit, using Apple's built-in frameworks.
-- No third-party dependencies, account, ads, or analytics.
-- Checks automatically about once a minute, when the Mac wakes, and when the network path changes.
-- Shows a brief checkmark after copying.
-- Reports connection failures and stops offering an outdated address for copying.
-- English interface.
+## Build from source
 
-## Build and run
-
-Requires **macOS 13 or later** and **Xcode Command Line Tools**. The build script targets the architecture of the Mac running it (Apple Silicon or Intel); it does not create a universal binary. Verification so far has been on Apple Silicon.
-
-If needed, install Apple's command-line tools:
-
-```sh
-xcode-select --install
-```
-
-From the project folder:
+Requires Xcode Command Line Tools. Quit any running copy first.
 
 ```sh
 ./build.sh
 open "/Applications/Public IP.app"
 ```
 
-The script compiles the app, installs it into `/Applications`, and signs it ad-hoc for local use. Quit an existing running copy before rebuilding. Writing to `/Applications` requires permission to that folder.
+Builds for the current Mac architecture and installs in `/Applications`.
 
-For a user-only installation, use:
+IP checks use [checkip.amazonaws.com](https://checkip.amazonaws.com/); VPN or proxy routing may affect the result.
 
-```sh
-APP_PATH="$HOME/Applications/Public IP.app" ./build.sh
-open "$HOME/Applications/Public IP.app"
-```
-
-Keep the app at the same installed location after enabling Launch at Login. To move it, turn that option off, move the app, and turn it on again.
-
-## How the IP check works
-
-Public IP requests `https://checkip.amazonaws.com/` over HTTPS and displays the address returned by that endpoint. It shows the public egress address seen by that service, which can be affected by a VPN, proxy, or your network routing. It does not inspect your local network addresses or verify whether a VPN is working.
-
-The app keeps the fetched address in memory and writes it to the clipboard only when you choose to copy. It saves a small local preference to remember that the initial Launch at Login setup has been handled. There is no app-operated backend or analytics service. The IP-check provider necessarily receives the network request and sees its source IP; this README does not make promises about that provider's logging or retention.
-
-## Distribution
-
-The current build script is for building and running locally. A downloaded release for other users should be signed with a Developer ID and notarized. Mac App Store distribution needs its own signing, sandbox configuration, and review preparation.
+[MIT License](LICENSE)
